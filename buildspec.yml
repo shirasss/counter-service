@@ -29,4 +29,4 @@ phases:
     post_build:
       commands:
         - aws eks update-kubeconfig --region $AWS_REGION --name counter-eks
-        - helm upgrade --install counter ./helm --namespace prod --create-namespace --set image.repository=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/counter-app-ecr --set image.tag=$COMMIT_HASH
+        - helm upgrade --install counter ./helm --namespace prod --create-namespace --set image.repository=$ECR_REPOSITORY_URI --set image.tag=$COMMIT_HASH
