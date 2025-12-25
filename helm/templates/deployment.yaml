@@ -14,6 +14,13 @@ spec:
     spec:
       securityContext:
         fsGroup: 10001
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ['sh', '-c', 'chown -R 10001:10001 /data && chmod -R 775 /data']
+          volumeMounts:
+            - name: data
+              mountPath: /data  
       containers:
         - name: counter
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
