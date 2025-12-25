@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-# RUN useradd -u 10001 appuser
+RUN useradd -u 10001 appuser
 
 WORKDIR /app
 
@@ -10,9 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
 
-# RUN mkdir /data && chown -R appuser:appuser /data
-
-# USER appuser
+USER appuser
 
 EXPOSE 8080
 

@@ -12,13 +12,15 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      # securityContext:
-      #   fsGroup: 10001  # Match the appuser UID
-      #   runAsUser: 10001
-      #   runAsGroup: 10001
+      securityContext:
+        fsGroup: 10001
       containers:
         - name: counter
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          securityContext:
+            runAsUser: 10001
+            runAsGroup: 10001
+            runAsNonRoot: true
           ports:
             - containerPort: 8080
           env:
@@ -27,7 +29,6 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-              subPath: counter-app
           readinessProbe:
             httpGet:
               path: /healthz
